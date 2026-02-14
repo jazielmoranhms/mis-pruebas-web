@@ -28,10 +28,10 @@ export default defineConfig({
     ['allure-playwright', { 
       outputFolder: 'allure-results', 
         environmentInfo: {
-        Ecosistema: 'Producción (Simulado)',
+        Ecosistema: 'Produccion (Simulado)',
         Cliente: 'Hospital ONCARE', // ¡Aquí está la magia!
-        Proyecto: 'Validación de Calidad QA',
-        Responsable: 'Ing. Jaziel Morán', // Tu nombre profesional
+        Proyecto: 'Validacion de Calidad QA',
+        Responsable: 'Ing. Jaziel Moran', // Tu nombre profesional
         Herramienta: 'Playwright + TypeScript'
       }
     }]
@@ -51,19 +51,19 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+   // {
+  //    name: 'chromium',
+  //    use: { ...devices['Desktop Chrome'] },
+  //  },
+ /* --- 1. Firefox (Motor Open Source) --- */
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+    name: 'firefox',
+     use: { ...devices['Desktop Firefox'] },
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+    name: 'webkit',
+     use: { ...devices['Desktop Safari'] },
     },
 
     /* Test against mobile viewports. */
