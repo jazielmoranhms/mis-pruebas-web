@@ -1,0 +1,59 @@
+name: Deploy Allure Report to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Permite ejecutarlo manualmente desde la pestaña Actions
+
+# Permisos necesarios para que el bot pueda publicar en la rama gh-pages
+permissions:
+  contents: write
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v4
+    
+    # 1. Instalar Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    # 2. Instalar Java (OBLIGATORIO para Allure)
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'microsoft'
+        java-version: '17'
+
+    # 3. Instalar Dependencias y Browsers
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    # 4. Instalar Allure Commandline (Versión NPM)
+    - name: Install Allure Commandline
+      run: npm install -g allure-commandline
+
+    # 5. Ejecutar Pruebas
+    - name: Run Playwright tests
+      run: npx playwright test
+      continue-on-error: true # Importante: Si falla un test, sigue al reporte
+
+    # 6. Generar el Reporte Visual
+    - name: Generate Allure Report
+      run: allure generate allure-results --clean -o allure-report
+
+    # 7. Publicar en GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./allure-report
+        publish_branch: gh-pages
