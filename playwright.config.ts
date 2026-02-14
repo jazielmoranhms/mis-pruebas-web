@@ -25,7 +25,16 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter:[
     ['line'], 
-    ['allure-playwright', { outputFolder: 'allure-results' }]
+    ['allure-playwright', { 
+      outputFolder: 'allure-results', 
+        environmentInfo: {
+        Ecosistema: 'Producción (Simulado)',
+        Cliente: 'Hospital ONCARE', // ¡Aquí está la magia!
+        Proyecto: 'Validación de Calidad QA',
+        Responsable: 'Ing. Jaziel Morán', // Tu nombre profesional
+        Herramienta: 'Playwright + TypeScript'
+      }
+    }]
     ],
     // 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
