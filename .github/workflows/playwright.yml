@@ -1,4 +1,4 @@
-name: Deploy Allure Report to GitHub Pages
+name: Dashboard de calidad - ONCARE
 
 on:
   push:
